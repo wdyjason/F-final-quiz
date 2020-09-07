@@ -53,6 +53,18 @@ class App extends Component {
       newName: e.target.value
     })
   }
+
+  clearName = () => {
+    this.setState({
+      newName: ''
+    })
+  }
+
+  setDefaultVal = () => {
+    this.setState({
+      newName: '+ 添加学员'
+    })
+  }
   
   render() {
     const {students, team, newName} = this.state;
@@ -69,7 +81,7 @@ class App extends Component {
               return(<StudentTag key={`student_${e.id}_key`} student={e} />)
             })
           }
-          <input value={newName} className="add-student"  onKeyPress={(event) => this.enterSubmit(event)} onChange={(event) => this.changeHandle(event)}/>
+          <input value={newName} className="add-student"  onKeyPress={(event) => this.enterSubmit(event)} onChange={(event) => this.changeHandle(event)} onFocus={this.clearName} onBlur={this.setDefaultVal}/>
          </div>
         </div>
       </div>
