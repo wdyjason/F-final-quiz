@@ -6,7 +6,7 @@ class TeamRow extends Component {
     render() {
         const {teamData, changeNameHandle, teamName, itemIndex, enterSubmit} = this.props
         return(
-        <div>
+        <div className="team-row">
             <div>
                 <input value={teamName} onChange={(event) => changeNameHandle(event, itemIndex)} onKeyPress={(event) => enterSubmit(event, 'changeTName', itemIndex)}/>
             </div>

@@ -1,16 +1,16 @@
 .App {
     width: 80%;
     margin: 0 auto;
+    background-color: whitesmoke;
+    padding: 10px;
 }
 
 .student-area-main {
-    background-color: whitesmoke;
     display: flex;
     flex-wrap: wrap;
-
     div {
         
-        width: 10%;
+        width: 9%;
         background-color: lightgray;
         border-style: solid;
         border-width: 1px;
@@ -21,12 +21,56 @@
     }
 
     input {
-        width: 10%;
+        width: 9%;
         background-color: whitesmoke;
         border-style: solid;
         border-width: 1px;
         margin: 1em;
         height: 25px;
         text-align: center;   
+    }
+}
+
+.team-area {
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        button {
+            background-color: rgb(234, 84, 85);
+            color: white;
+            border-style: none;
+            height: 30px;
+            width: 12%;
+        }
+    }
+}
+.team-row {
+    border-style: solid;
+    border-color: rgb(146, 155, 171);
+    margin-bottom: 20px;
+    input {
+        width: 99.8%;
+        text-align: center;
+        background-color: rgb(146, 155, 171);
+        color: white;
+        height: 25px;
+        border-style: none;
+        border-radius: 0%;
+    }
+    main {
+        display: flex;
+        flex-wrap: wrap;
+        div {
+        
+            width: 9%;
+            background-color: lightgray;
+            border-style: solid;
+            border-width: 1px;
+            margin: 1em;
+            height: 25px;
+            text-align: center;
+            line-height: 25px;
+        }
     }
 }
