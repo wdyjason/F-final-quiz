@@ -65,6 +65,10 @@ class App extends Component {
   }
 
   addStudent = () => {
+    if (this.state.newName === '' || this.state.newName === '+ 添加学员') {
+      alert('非法的学员名！')
+      return
+    }
     const requestUrl = `http://localhost:8080/api/student?name=${this.state.newName}`
     fetchCreateData(requestUrl, 'POST').then(res => {
       this.componentDidMount()
@@ -77,6 +81,10 @@ class App extends Component {
   }
 
   changeTName = (index) => {
+    if (this.state.teamNames[index] === '') {
+      alert('组名不能为空！')
+      return
+    }
     const requestUrl = `http://localhost:8080/api/team/${index + 1}?name=${this.state.teamNames[index]}`
     fetchCreateData(requestUrl, 'POST').then(res => {
       this.componentDidMount()
