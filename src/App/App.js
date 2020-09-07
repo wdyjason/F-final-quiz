@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.scss';
 import StudentTag from './StudentTag';
-import fetchData from './utils';
+import {fetchData, fetchCreateData} from './utils';
 
 class App extends Component {
 
@@ -36,15 +36,19 @@ class App extends Component {
           
     if(keyCode === 13)   
     {  
-        fetchData(requestUrl, 'POST').then(res => {
+        fetchCreateData(requestUrl, 'POST').then(res => {
           console.log(res)
-          this.setState({
-            students: [],
-          })
+          this.componentDidMount()
         }).catch(e => {
           console.log(e)
         })
     }  
+  }
+
+  changeHandle = (e) => {
+    this.setState({
+      newName: e.target.value
+    })
   }
   
   render() {
@@ -62,7 +66,7 @@ class App extends Component {
               return(<StudentTag key={`student_${e.id}_key`} student={e} />)
             })
           }
-          <input value={newName} className="add-student" placeholder="+ 添加学员" onKeyPress={this.enterSubmit(event)}/>
+          <input value={newName} className="add-student" placeholder="+ 添加学员" onKeyPress={(event) => this.enterSubmit(event)} onChange={(event) => this.changeHandle(event)}/>
          </div>
         </div>
       </div>
