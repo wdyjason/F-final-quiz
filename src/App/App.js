@@ -12,6 +12,7 @@ class App extends Component {
       team: [],
       students: [],
       newName: '+ 添加学员',
+      teamNames: [],
     };
   }
 
@@ -24,12 +25,25 @@ class App extends Component {
     }).catch(e => {
       console.log(e)
     })
+
+    const requestTeamUrl = `http://localhost:8080/api/team`
+    fetchData(requestTeamUrl, 'GET').then(res => {
+      const tNames = res.map(e => {
+        return e.teamName
+      })
+      this.setState({
+        team: res,
+        teamNames: tNames
+      })
+    }).catch(e => {
+      console.log(e)
+    })
+
   }
 
-  enterSubmit = (e) => {
+  enterSubmit = (e, pattern, index) => {
     let keyCode = null;  
-    const requestUrl = `http://localhost:8080/api/student?name=${this.state.newName}`
-
+   
     if(e.which)  
         keyCode = e.which;  
     else if(e.keyCode)   
@@ -37,15 +51,38 @@ class App extends Component {
           
     if(keyCode === 13)   
     {  
-        fetchCreateData(requestUrl, 'POST').then(res => {
-          this.componentDidMount()
-          this.setState({
-            newName: '+ 添加学员'
-          })
-        }).catch(e => {
-          console.log(e)
-        })
+       this.doPatterns(pattern, index)
     }  
+  }
+
+  doPatterns = (pattern, index) => {
+    if (pattern === 'addStu') {
+      this.addStudent()
+    }
+    if (pattern === 'changeTName') {
+      this.changeTName(index)
+    }
+  }
+
+  addStudent = () => {
+    const requestUrl = `http://localhost:8080/api/student?name=${this.state.newName}`
+    fetchCreateData(requestUrl, 'POST').then(res => {
+      this.componentDidMount()
+      this.setState({
+        newName: '+ 添加学员'
+      })
+    }).catch(e => {
+      console.log(e)
+    })
+  }
+
+  changeTName = (index) => {
+    const requestUrl = `http://localhost:8080/api/team/${index + 1}?name=${this.state.teamNames[index]}`
+    fetchCreateData(requestUrl, 'POST').then(res => {
+      this.componentDidMount()
+    }).catch(e => {
+      console.log(e)
+    })
   }
 
   changeHandle = (e) => {
@@ -67,18 +104,22 @@ class App extends Component {
   }
 
   changeNameHandle= (e, index) => {
-    const setVal = [...this.state.team]
-    setVal[index].teamName = e.target.value
+    const setVal = [...this.state.teamNames]
+    setVal[index] = e.target.value
     this.setState({
-      team: setVal
+      teamNames: setVal
     })
   }
 
   dividedTeam = () => {
-    const requestUrl = `http://localhost:8080/api/team`
-    fetchData(requestUrl, 'GET').then(res => {
+    const requestUrl = `http://localhost:8080/api/team/split`
+    fetchData(requestUrl, 'POST').then(res => {
+      const tNames = res.map(e => {
+        return e.teamName
+      })
       this.setState({
         team: res,
+        teamNames: tNames
       })
     }).catch(e => {
       console.log(e)
@@ -86,7 +127,7 @@ class App extends Component {
   } 
   
   render() {
-    const {students, team, newName} = this.state;
+    const {students, team, newName, teamNames} = this.state;
     return (
       <div data-testid="app" className="App">
         <div className="team-area">
@@ -96,8 +137,9 @@ class App extends Component {
          </header>
          <div className="tem-area-main">
            {
-             team.map((e, _index) => {
-               return(<TeamRow key={`key_${e.teamName}`} teamData={e} teamName={e.teamName} itemIndex={_index} changeNameHandle={this.changeNameHandle}/>)
+             team.map((e, index) => {
+               return(<TeamRow key={`key_${e.teamName}`} teamData={e} teamName={teamNames[index]} 
+               itemIndex={index} changeNameHandle={this.changeNameHandle} enterSubmit={this.enterSubmit}/>)
              })
            }
          </div>
@@ -110,7 +152,9 @@ class App extends Component {
               return(<StudentTag key={`student_${e.id}_key`} student={e} />)
             })
           }
-          <input value={newName} className="add-student"  onKeyPress={(event) => this.enterSubmit(event)} onChange={(event) => this.changeHandle(event)} onFocus={this.clearName} onBlur={this.setDefaultVal}/>
+          <input value={newName} className="add-student"  onKeyPress={(event) => this.enterSubmit(event, 'addStu')} 
+          onChange={(event) => this.changeHandle(event)} onFocus={this.clearName} onBlur={this.setDefaultVal}/>
+          
          </div>
         </div>
       </div>
