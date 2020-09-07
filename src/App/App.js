@@ -10,7 +10,7 @@ class App extends Component {
     this.state = {
       team: [],
       students: [],
-      newName: '',
+      newName: '+ 添加学员',
     };
   }
 
@@ -39,6 +39,9 @@ class App extends Component {
         fetchCreateData(requestUrl, 'POST').then(res => {
           console.log(res)
           this.componentDidMount()
+          this.setState({
+            newName: '+ 添加学员'
+          })
         }).catch(e => {
           console.log(e)
         })
@@ -66,7 +69,7 @@ class App extends Component {
               return(<StudentTag key={`student_${e.id}_key`} student={e} />)
             })
           }
-          <input value={newName} className="add-student" placeholder="+ 添加学员" onKeyPress={(event) => this.enterSubmit(event)} onChange={(event) => this.changeHandle(event)}/>
+          <input value={newName} className="add-student"  onKeyPress={(event) => this.enterSubmit(event)} onChange={(event) => this.changeHandle(event)}/>
          </div>
         </div>
       </div>
