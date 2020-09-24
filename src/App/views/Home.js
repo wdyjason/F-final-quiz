@@ -168,7 +168,7 @@ class Home extends Component {
     // console.log(this.state);
     return (
       <div data-testid="app" className="App">
-        <div className="group-area">
+        <section className="group-area">
          <header>
           <h1>分组列表</h1>
           <button type="button" onClick={this.autoGrouping}>分组学员</button>
@@ -181,7 +181,7 @@ class Home extends Component {
              })
            }
          </div>
-        </div>
+        </section>
         <section className="trainer-area">
            <h1>讲师列表</h1>
            <div className="trainer-area-main">
@@ -196,7 +196,7 @@ class Home extends Component {
         </section>
         <div className="trainee-area">
          <h1>学员列表</h1>
-         <div className="trainee-area-main">
+         <section className="trainee-area-main">
          {
             trainees.map(e => {
               return(<TraineeTag key={`student_${e.id}_key`} traineeData={e} />)
@@ -204,7 +204,7 @@ class Home extends Component {
           }
           <button type="button"className="add-trainee" onClick={this.addTrainee}>+ 添加学员</button>
           
-         </div>
+         </section>
         </div>
       </div>
     );
