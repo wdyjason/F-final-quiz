@@ -12,12 +12,16 @@ const fetchData = (url, methods) => {
       .catch((error) => console.error(error));
   }
 
-  const fetchCreateData = (url, methods) => {
+  const fetchCreateData = (url, methods, sendData) => {
     return fetch(url, {
         method: methods,
+        body: JSON.stringify(sendData),
+        headers: {
+          'Content-Type': 'application/json'
+        },
     })
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 201) {
             // console.log(response)
           return response.status;
         }
