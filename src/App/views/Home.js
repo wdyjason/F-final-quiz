@@ -3,6 +3,7 @@ import TraineeTag from '../components/TraineeTag';
 import TrainerTag from '../components/TrainerTag';
 import {fetchData, fetchCreateData} from '../utils';
 import GroupRow from '../components/GroupRow';
+import './Home.scss';
 
 class Home extends Component {
 
@@ -114,7 +115,6 @@ class Home extends Component {
     }
     const requestUrl = `http://localhost:8080/api/team/${index + 1}?name=${this.state.teamNames[index]}`
     fetchCreateData(requestUrl, 'POST').then(res => {
-      this.componentDidMount()
     }).catch(e => {
       console.log(e)
     })

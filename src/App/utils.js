@@ -1,4 +1,4 @@
-const fetchData = (url, methods) => {
+export const fetchData = (url, methods) => {
     return fetch(url, {
         method: methods,
     })
@@ -12,7 +12,7 @@ const fetchData = (url, methods) => {
       .catch((error) => console.error(error));
   }
 
-  const fetchCreateData = (url, methods, sendData) => {
+ export const fetchCreateData = (url, methods, sendData) => {
     return fetch(url, {
         method: methods,
         body: JSON.stringify(sendData),
@@ -29,5 +29,9 @@ const fetchData = (url, methods) => {
       })
       .catch((error) => console.error(error));
   }
-
-  export {fetchData, fetchCreateData};
+export const validateMessages = {
+  required: '此项必填!',
+  types: {
+    email: '邮箱格式错误!',
+  },
+};

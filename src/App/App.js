@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {Route, Switch} from "react-router";
 import Home from './views/Home';
-import './App.scss';
+import AddTrainee from './views/AddTrainee';
 
 class App extends Component {
   render() {
@@ -11,6 +11,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path='/' component={Home} />
+            <Route exact path='/trainee/add' component={AddTrainee} />
           </Switch>
         </Router>
       </div>
