@@ -228,19 +228,19 @@ class App extends Component {
               return(<TrainerTag key={`trainer_${e.id}_key`} trainersData={e} />)
             })
           }
-           <input value={trainerName} className="add-student"  onKeyPress={(event) => this.enterSubmit(event, 'addTrainer')} 
+           <input value={trainerName} className="add-trainer"  onKeyPress={(event) => this.enterSubmit(event, 'addTrainer')} 
           onChange={(event) => this.changeHandle(event, 'trainer')} onFocus={() => this.clearInput('trainer')} onBlur={() => this.setDefaultVal('trainer')}/>
           </div>
         </section>
-        <div className="student-area">
+        <div className="trainee-area">
          <h1>学员列表</h1>
-         <div className="student-area-main">
+         <div className="trainee-area-main">
          {
             students.map(e => {
               return(<TraineeTag key={`student_${e.id}_key`} student={e} />)
             })
           }
-          <input value={newName} className="add-student"  onKeyPress={(event) => this.enterSubmit(event, 'addTrainee')} 
+          <input value={newName} className="add-trainee"  onKeyPress={(event) => this.enterSubmit(event, 'addTrainee')} 
           onChange={(event) => this.changeHandle(event, 'trainee')} onFocus={() => this.clearInput('trainee')} onBlur={() => this.setDefaultVal('trainee')}/>
           
          </div>

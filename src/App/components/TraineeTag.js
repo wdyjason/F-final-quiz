@@ -5,7 +5,7 @@ class TraineeTag extends Component {
     render() {
         const {id, name} = this.props.student
         return(
-        <div>{`${id}. ${name}`}</div>
+        <div className="trainee-tag">{`${id}. ${name}`}</div>
         )
     }
 }
