@@ -59,7 +59,7 @@
         }
     }
 }
-.team-row {
+.group-row {
     border-style: solid;
     border-color: rgb(146, 155, 171);
     margin-bottom: 20px;
@@ -74,24 +74,26 @@
         border-style: none;
         border-radius: 0%;
     }
-    main {
-        display: flex;
-        flex-wrap: wrap;
-        div {
-        
-            width: 9%;
-            background-color: lightgray;
-            border-style: solid;
-            border-width: 1px;
-            margin: 1em;
-            height: 25px;
-            text-align: center;
-            line-height: 25px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-    }
+ 
+}
+
+.gourp-row-main {
+    display: flex;
+    flex-wrap: wrap;
+    // div {
+    
+    //     width: 9%;
+    //     background-color: lightgray;
+    //     border-style: solid;
+    //     border-width: 1px;
+    //     margin: 1em;
+    //     height: 25px;
+    //     text-align: center;
+    //     line-height: 25px;
+    //     overflow: hidden;
+    //     text-overflow: ellipsis;
+    //     white-space: nowrap;
+    // }
 }
 
 h1 {
