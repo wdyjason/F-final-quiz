@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class StudentTag extends Component {
+class TraineeTag extends Component {
     
     render() {
         const {id, name} = this.props.student
@@ -10,4 +10,4 @@ class StudentTag extends Component {
     }
 }
 
-export default StudentTag;
+export default TraineeTag;

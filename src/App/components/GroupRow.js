@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import StudentTag from './StudentTag';
+import TraineeTag from './TraineeTag';
 
-class TeamRow extends Component {
+class groupRow extends Component {
     
     render() {
         const {teamData, changeNameHandle, teamName, itemIndex, enterSubmit} = this.props
@@ -13,7 +13,7 @@ class TeamRow extends Component {
             <main>
                 {
                     teamData.teamMates.map(e => {
-                        return(<StudentTag key={`key_in_row_${e.id}`} student={e} />)
+                        return(<TraineeTag key={`key_in_row_${e.id}`} student={e} />)
                     })
                 }
             </main>
@@ -22,4 +22,4 @@ class TeamRow extends Component {
     }
 }
 
-export default TeamRow;
+export default groupRow;

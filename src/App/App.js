@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.scss';
-import StudentTag from './StudentTag';
+import TraineeTag from './components/TraineeTag';
 import {fetchData, fetchCreateData} from './utils';
-import TeamRow from './TeamRow';
+import GroupRow from './components/GroupRow';
 
 class App extends Component {
 
@@ -17,6 +17,12 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.getTrainee();
+    this.getGroup();
+   
+  }
+
+  getTrainee = () => {
     const requestUrl = `http://localhost:8080/api/students`
     fetchData(requestUrl, 'GET').then(res => {
       this.setState({
@@ -25,7 +31,9 @@ class App extends Component {
     }).catch(e => {
       console.log(e)
     })
+  }
 
+  getGroup = () => {
     const requestTeamUrl = `http://localhost:8080/api/team`
     fetchData(requestTeamUrl, 'GET').then(res => {
       const tNames = res.map(e => {
@@ -38,7 +46,6 @@ class App extends Component {
     }).catch(e => {
       console.log(e)
     })
-
   }
 
   enterSubmit = (e, pattern, index) => {
@@ -71,7 +78,8 @@ class App extends Component {
     }
     const requestUrl = `http://localhost:8080/api/student?name=${this.state.newName}`
     fetchCreateData(requestUrl, 'POST').then(res => {
-      this.componentDidMount()
+      this.getTrainee();
+      this.getGroup();
       this.setState({
         newName: '+ 添加学员'
       })
@@ -146,7 +154,7 @@ class App extends Component {
          <div className="tem-area-main">
            {
              team.map((e, index) => {
-               return(<TeamRow key={`key_${e.teamName}`} teamData={e} teamName={teamNames[index]} 
+               return(<GroupRow key={`key_${e.teamName}`} teamData={e} teamName={teamNames[index]} 
                itemIndex={index} changeNameHandle={this.changeNameHandle} enterSubmit={this.enterSubmit}/>)
              })
            }
@@ -157,7 +165,7 @@ class App extends Component {
          <div className="student-area-main">
          {
             students.map(e => {
-              return(<StudentTag key={`student_${e.id}_key`} student={e} />)
+              return(<TraineeTag key={`student_${e.id}_key`} student={e} />)
             })
           }
           <input value={newName} className="add-student"  onKeyPress={(event) => this.enterSubmit(event, 'addStu')} 
