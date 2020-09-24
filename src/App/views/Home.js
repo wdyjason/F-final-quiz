@@ -10,19 +10,22 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      team: [],
+      group: [],
       trainees: [],
-      teamNames: [],
+      groupNames: [],
       trainers: [],
       trainerName: '+ 添加讲师',
     };
   }
 
   componentDidMount() {
+    this.refreshData();
+  }
+
+  refreshData =  () => {
     this.getTrainee();
-    // this.getGroup();
+    this.getGroup();
     this.getTrainers();
-   
   }
 
   getTrainee = () => {
@@ -37,14 +40,14 @@ class Home extends Component {
   }
 
   getGroup = () => {
-    const requestTeamUrl = `http://localhost:8080/api/team`
+    const requestTeamUrl = `http://localhost:8080/groups`
     fetchData(requestTeamUrl, 'GET').then(res => {
       const tNames = res.map(e => {
-        return e.teamName
+        return e.name
       })
       this.setState({
-        team: res,
-        teamNames: tNames
+        group: res,
+        groupNames: tNames
       })
     }).catch(e => {
       console.log(e)
@@ -91,17 +94,17 @@ class Home extends Component {
     this.props.history.push('/trainees/add');
   }
 
-  changeTName = (index) => {
-    if (this.state.teamNames[index] === '') {
-      alert('组名不能为空！')
-      return
-    }
-    const requestUrl = `http://localhost:8080/api/team/${index + 1}?name=${this.state.teamNames[index]}`
-    fetchCreateData(requestUrl, 'POST').then(res => {
-    }).catch(e => {
-      console.log(e)
-    })
-  }
+  // changeTName = (index) => {
+  //   if (this.state.teamNames[index] === '') {
+  //     alert('组名不能为空！')
+  //     return
+  //   }
+  //   const requestUrl = `http://localhost:8080/api/team/${index + 1}?name=${this.state.teamNames[index]}`
+  //   fetchCreateData(requestUrl, 'POST').then(res => {
+  //   }).catch(e => {
+  //     console.log(e)
+  //   })
+  // }
 
   addTrainer = () => {
     const requestUrl = `http://localhost:8080/trainers`
@@ -144,34 +147,36 @@ class Home extends Component {
     })
   }
 
-  dividedTeam = () => {
-    const requestUrl = `http://localhost:8080/api/team/split`
+  autoGrouping = () => {
+    const requestUrl = `http://localhost:8080/groups/auto-grouping`
     fetchData(requestUrl, 'POST').then(res => {
       const tNames = res.map(e => {
         return e.teamName
       })
       this.setState({
-        team: res,
-        teamNames: tNames
+        group: res,
+        groupNames: tNames
       })
+      this.refreshData();
     }).catch(e => {
       console.log(e)
     })
   } 
   
   render() {
-    const {trainees, team, teamNames, trainers, trainerName } = this.state;
+    const {trainees, group, groupNames, trainers, trainerName } = this.state;
+    // console.log(this.state);
     return (
       <div data-testid="app" className="App">
-        <div className="team-area">
+        <div className="group-area">
          <header>
           <h1>分组列表</h1>
-          <button type="button" onClick={this.dividedTeam}>分组学员</button>
+          <button type="button" onClick={this.autoGrouping}>分组学员</button>
          </header>
-         <div className="tem-area-main">
+         <div className="group-area-main">
            {
-             team.map((e, index) => {
-               return(<GroupRow key={`key_${e.teamName}`} teamData={e} teamName={teamNames[index]} 
+             group.map((e, index) => {
+               return(<GroupRow key={`key_${e.id}`} groupData={e} groupName={groupNames[index]} 
                itemIndex={index} changeNameHandle={this.changeNameHandle} enterSubmit={this.enterSubmit}/>)
              })
            }
@@ -194,7 +199,7 @@ class Home extends Component {
          <div className="trainee-area-main">
          {
             trainees.map(e => {
-              return(<TraineeTag key={`student_${e.id}_key`} student={e} />)
+              return(<TraineeTag key={`student_${e.id}_key`} traineeData={e} />)
             })
           }
           <button type="button"className="add-trainee" onClick={this.addTrainee}>+ 添加学员</button>
