@@ -11,8 +11,7 @@ class Home extends Component {
     super();
     this.state = {
       team: [],
-      students: [],
-      newName: '+ 添加学员',
+      trainees: [],
       teamNames: [],
       trainers: [],
       trainerName: '+ 添加讲师',
@@ -20,17 +19,17 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    // this.getTrainee();
+    this.getTrainee();
     // this.getGroup();
     this.getTrainers();
    
   }
 
   getTrainee = () => {
-    const requestUrl = `http://localhost:8080/api/students`
+    const requestUrl = `http://localhost:8080/trainees?grouped=false`
     fetchData(requestUrl, 'GET').then(res => {
       this.setState({
-        students: res,
+        trainees: res,
       })
     }).catch(e => {
       console.log(e)
@@ -78,9 +77,6 @@ class Home extends Component {
   }
 
   doPatterns = (pattern, index) => {
-    if (pattern === 'addTrainee') {
-      this.addTrainee()
-    }
     if (pattern === 'changeTName') {
       this.changeTName(index)
     }
@@ -92,20 +88,7 @@ class Home extends Component {
   }
 
   addTrainee = () => {
-    if (this.state.newName === '' || this.state.newName === '+ 添加学员') {
-      alert('非法的学员名！')
-      return
-    }
-    const requestUrl = `http://localhost:8080/api/student?name=${this.state.newName}`
-    fetchCreateData(requestUrl, 'POST').then(res => {
-      this.getTrainee();
-      this.getGroup();
-      this.setState({
-        newName: '+ 添加学员'
-      })
-    }).catch(e => {
-      console.log(e)
-    })
+    this.props.history.push('/trainees/add');
   }
 
   changeTName = (index) => {
@@ -124,7 +107,7 @@ class Home extends Component {
     const requestUrl = `http://localhost:8080/trainers`
     const sendData = { name: this.state.trainerName};
     fetchCreateData(requestUrl, 'POST', sendData).then(res => {
-      // this.getTrainee();
+      this.getTrainee();
       // this.getGroup();
       this.getTrainers();
       this.setState({
@@ -135,47 +118,22 @@ class Home extends Component {
     })
   }
 
-  changeHandle = (e, type) => {
-   if (type === 'trainee') {
-    this.setState({
-      newName: e.target.value
-    })
-   }
-
-   if (type === 'trainer') {
+  changeHandle = (e) => {
     this.setState({
       trainerName: e.target.value
     })
-   }
   }
 
-  clearInput = (type) => {
-   if (type === 'trainee') {
-    this.setState({
-      newName: ''
-    })
-   }
-   
-   if (type === 'trainer') {
+  clearInput = () => {
     this.setState({
       trainerName: ''
     })
-   }
-  
   }
 
-  setDefaultVal = (type) => {
-   if (type === 'trainee') {
-    this.setState({
-      newName: '+ 添加学员'
-    })
-   }
-
-   if (type === 'trainer') {
+  setDefaultVal = () => {
     this.setState({
       trainerName: '+ 添加讲师'
     })
-   }
   }
 
   changeNameHandle= (e, index) => {
@@ -202,7 +160,7 @@ class Home extends Component {
   } 
   
   render() {
-    const {students, team, newName, teamNames, trainers, trainerName } = this.state;
+    const {trainees, team, teamNames, trainers, trainerName } = this.state;
     return (
       <div data-testid="app" className="App">
         <div className="team-area">
@@ -228,19 +186,18 @@ class Home extends Component {
             })
           }
            <input value={trainerName} className="add-trainer"  onKeyPress={(event) => this.enterSubmit(event, 'addTrainer')} 
-          onChange={(event) => this.changeHandle(event, 'trainer')} onFocus={() => this.clearInput('trainer')} onBlur={() => this.setDefaultVal('trainer')}/>
+          onChange={(event) => this.changeHandle(event)} onFocus={this.clearInput} onBlur={this.setDefaultVal}/>
           </div>
         </section>
         <div className="trainee-area">
          <h1>学员列表</h1>
          <div className="trainee-area-main">
          {
-            students.map(e => {
+            trainees.map(e => {
               return(<TraineeTag key={`student_${e.id}_key`} student={e} />)
             })
           }
-          <input value={newName} className="add-trainee"  onKeyPress={(event) => this.enterSubmit(event, 'addTrainee')} 
-          onChange={(event) => this.changeHandle(event, 'trainee')} onFocus={() => this.clearInput('trainee')} onBlur={() => this.setDefaultVal('trainee')}/>
+          <button type="button"className="add-trainee" onClick={this.addTrainee}>+ 添加学员</button>
           
          </div>
         </div>
