@@ -105,7 +105,7 @@ class Home extends Component {
   //     console.log(e)
   //   })
   // }
-
+ 
   addTrainer = () => {
     const requestUrl = `http://localhost:8080/trainers`
     const sendData = { name: this.state.trainerName};

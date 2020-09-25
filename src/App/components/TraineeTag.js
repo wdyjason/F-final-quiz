@@ -1,11 +1,26 @@
+import { Popover, Tag } from 'antd';
 import React, { Component } from 'react';
 
 class TraineeTag extends Component {
     
     render() {
-        const {id, name} = this.props.traineeData
+        const {id, name, office, email, github, zoomId} = this.props.traineeData
+
+        const  content = (
+            <div className="trainee-tag-pop-over">
+                <Tag>{`id:${id}`}</Tag>
+                <Tag>{`名字：${name}`}</Tag>
+                <Tag>{`办公室：${office}`}</Tag>
+                <Tag>{`邮箱：${email}`}</Tag>
+                <Tag>{`github账号：${github}`}</Tag>
+                <Tag>{`zoom id：${zoomId}`}</Tag>
+            </div>
+            );
+
         return(
+        <Popover content={content} title="详情">
         <div className="trainee-tag">{`${id}. ${name}`}</div>
+        </Popover>
         )
     }
 }
