@@ -10,11 +10,15 @@ class groupRow extends Component {
         <div className="group-row">
             <div className="group-row-header">
                 <input className="group-name" value={groupName} onChange={(event) => changeNameHandle(event, itemIndex)} onKeyPress={(event) => enterSubmit(event, 'changeTName', itemIndex)}/>
+                <div className="trainer_in_row">
                 {
+                    
                     groupData.trainers.map(e => {
                         return(<TrainerTag key={`trainer_in_row_${e.id}_key`} trainersData={e} />)
                       })
+                   
                 }
+                </div>
 
             </div>
             <main className="group-row-main">
