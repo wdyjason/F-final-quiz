@@ -3,7 +3,7 @@ import TraineeTag from './TraineeTag';
 import TrainerTag from './TrainerTag';
 
 class groupRow extends Component {
-    
+
     render() {
         const {groupData, changeNameHandle, groupName, itemIndex, enterSubmit} = this.props
         return(
@@ -21,6 +21,7 @@ class groupRow extends Component {
                 </div>
 
             </div>
+            {/* TODO feedback：这里使用main不准确 */}
             <main className="group-row-main">
                 {
                     groupData.trainees.map(e => {

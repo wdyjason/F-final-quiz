@@ -5,6 +5,7 @@ import {fetchData, fetchCreateData} from '../utils';
 import GroupRow from '../components/GroupRow';
 import './Home.scss';
 
+// TODO feedback：组件划分不够合理，划分层次不够， group，trainees，trainers可以再分成三个组件
 class Home extends Component {
 
   constructor() {
@@ -28,6 +29,7 @@ class Home extends Component {
     this.getTrainers();
   }
 
+  // TODO feedback：建议把数据请求二次抽象，相应的url，methods也提出去，减少和组件的耦合
   getTrainee = () => {
     const requestUrl = `http://localhost:8080/trainees?grouped=false`
     fetchData(requestUrl, 'GET').then(res => {
@@ -66,17 +68,17 @@ class Home extends Component {
   }
 
   enterSubmit = (e, pattern, index) => {
-    let keyCode = null;  
-   
-    if(e.which)  
-        keyCode = e.which;  
-    else if(e.keyCode)   
-        keyCode = e.keyCode;  
-          
-    if(keyCode === 13)   
-    {  
+    let keyCode = null;
+
+    if(e.which)
+        keyCode = e.which;
+    else if(e.keyCode)
+        keyCode = e.keyCode;
+
+    if(keyCode === 13)
+    {
        this.doPatterns(pattern, index)
-    }  
+    }
   }
 
   doPatterns = (pattern, index) => {
@@ -94,6 +96,7 @@ class Home extends Component {
     this.props.history.push('/trainees/add');
   }
 
+  // TODO feedback：不推荐提交注释代码
   // changeTName = (index) => {
   //   if (this.state.teamNames[index] === '') {
   //     alert('组名不能为空！')
@@ -105,7 +108,7 @@ class Home extends Component {
   //     console.log(e)
   //   })
   // }
- 
+
   addTrainer = () => {
     const requestUrl = `http://localhost:8080/trainers`
     const sendData = { name: this.state.trainerName};
@@ -142,6 +145,8 @@ class Home extends Component {
   changeNameHandle= (e, index) => {
     const setVal = [...this.state.teamNames]
     setVal[index] = e.target.value
+
+    // TODO feedback： setState需要用callback的方式赋值
     this.setState({
       teamNames: setVal
     })
@@ -161,10 +166,11 @@ class Home extends Component {
     }).catch(e => {
       console.log(e)
     })
-  } 
-  
+  }
+
   render() {
     const {trainees, group, groupNames, trainers, trainerName } = this.state;
+    // TODO feedback：不要提交console.log
     // console.log(this.state);
     return (
       <div data-testid="app" className="App">
@@ -173,10 +179,11 @@ class Home extends Component {
           <h1>分组列表</h1>
           <button type="button" onClick={this.autoGrouping}>分组学员</button>
          </header>
+          {/* TODO feedback：列表用ul li更符合语义 */}
          <div className="group-area-main">
            {
              group.map((e, index) => {
-               return(<GroupRow key={`key_${e.id}`} groupData={e} groupName={groupNames[index]} 
+               return(<GroupRow key={`key_${e.id}`} groupData={e} groupName={groupNames[index]}
                itemIndex={index} changeNameHandle={this.changeNameHandle} enterSubmit={this.enterSubmit}/>)
              })
            }
@@ -190,7 +197,7 @@ class Home extends Component {
               return(<TrainerTag key={`trainer_${e.id}_key`} trainersData={e} />)
             })
           }
-           <input value={trainerName} className="add-trainer"  onKeyPress={(event) => this.enterSubmit(event, 'addTrainer')} 
+           <input value={trainerName} className="add-trainer"  onKeyPress={(event) => this.enterSubmit(event, 'addTrainer')}
           onChange={(event) => this.changeHandle(event)} onFocus={this.clearInput} onBlur={this.setDefaultVal}/>
           </div>
         </section>
@@ -203,7 +210,7 @@ class Home extends Component {
             })
           }
           <button type="button"className="add-trainee" onClick={this.addTrainee}>+ 添加学员</button>
-          
+
          </section>
         </div>
       </div>

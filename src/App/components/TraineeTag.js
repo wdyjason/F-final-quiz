@@ -1,8 +1,9 @@
 import { Popover, Tag } from 'antd';
 import React, { Component } from 'react';
 
+// TODO feedback：TraineeTag和TrainerTag两个组件有很多重复逻辑，可以抽象、提取成公共组件
 class TraineeTag extends Component {
-    
+
     render() {
         const {id, name, office, email, github, zoomId} = this.props.traineeData
 
